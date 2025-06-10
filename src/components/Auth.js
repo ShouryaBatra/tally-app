@@ -134,7 +134,7 @@ export default function Auth() {
                 }}
               >
                 {isLogin
-                  ? "Don't have an account? Sign up"
+                  ? "Don&apos;t have an account? Sign up"
                   : "Already have an account? Sign in"}
               </button>
             </div>

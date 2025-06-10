@@ -22,7 +22,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (!currentUser) return;
 
-    // Listen to user's own count
+    // Listen to user own count
     const userDoc = doc(db, "users", currentUser.uid);
     const unsubscribeUser = onSnapshot(userDoc, (doc) => {
       if (doc.exists()) {
@@ -136,7 +136,7 @@ export default function Dashboard() {
             <div className="text-6xl font-bold text-green-600 mb-4">
               {userCount.toLocaleString()}
             </div>
-            <p className="text-gray-500">Data points you've collected</p>
+            <p className="text-gray-500">Data points you&apos;ve collected</p>
           </div>
         </div>
 
