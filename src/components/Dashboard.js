@@ -17,7 +17,6 @@ export default function Dashboard() {
   const [userCount, setUserCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -33,16 +32,13 @@ export default function Dashboard() {
     // Listen to all users for total count
     const usersQuery = query(collection(db, "users"), orderBy("count", "desc"));
     const unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-      const users = [];
       let total = 0;
 
       snapshot.forEach((doc) => {
-        const userData = { id: doc.id, ...doc.data() };
-        users.push(userData);
+        const userData = doc.data();
         total += userData.count || 0;
       });
 
-      setAllUsers(users);
       setTotalCount(total);
     });
 
@@ -156,42 +152,6 @@ export default function Dashboard() {
           >
             - Remove One
           </button>
-        </div>
-
-        {/* Team Leaderboard */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">
-            Team Leaderboard
-          </h3>
-          <div className="space-y-3">
-            {allUsers.map((user, index) => (
-              <div
-                key={user.id}
-                className={`flex items-center justify-between p-3 rounded-lg ${
-                  user.id === currentUser.uid
-                    ? "bg-indigo-50 border border-indigo-200"
-                    : "bg-gray-50"
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="text-lg font-semibold text-gray-500">
-                    #{index + 1}
-                  </span>
-                  <span className="font-medium text-gray-900">
-                    {user.name || user.email}
-                    {user.id === currentUser.uid && (
-                      <span className="text-indigo-600 text-sm ml-1">
-                        (You)
-                      </span>
-                    )}
-                  </span>
-                </div>
-                <span className="text-lg font-bold text-gray-900">
-                  {(user.count || 0).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
       </main>
     </div>
