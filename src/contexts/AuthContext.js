@@ -35,7 +35,8 @@ export function AuthProvider({ children }) {
     await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: email,
-      count: 0,
+      promptCount: 0,
+      gradedCount: 0,
       createdAt: new Date().toISOString(),
     });
 
